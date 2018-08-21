@@ -9,6 +9,12 @@ GAME RULES:
 
 */
 
+
+// TO DO:
+// - Add Hold functionality.
+
+
+
 var currentNumb = 0;
 var currentPlayer = 1;
 
@@ -24,16 +30,46 @@ var currentScore1 = document.getElementById("current-0");
 var currentScore2 = document.getElementById("current-1");
 var active0 = document.getElementById("active-0");
 var active1 = document.getElementById("active-1");
+var holdBtn = document.getElementById("holdbtn");
 
 
 newGameBtn.addEventListener("click", gameReset);
 rollDiceBtn.addEventListener("click", diceRoll);
+holdBtn.addEventListener("click", holdPoints);
 
+
+function gameReset(){
+  player1Score.innerHTML = 0;
+  player2Score.innerHTML = 0;
+  player1Current.innerHTML = 0;
+  player2Current.innerHTML = 0;
+  currentPlayer = 1;
+  diceImg.style.visibility = "hidden";
+  currentNumb = 0;
+}
 
 
 
 function holdPoints(){
+  if (currentPlayer == 1){
+    player1Score = player1Score + currentScore1;
+    player1Score.innerHTML = 1;
 
+    //player1Score.innerHTML = player1Score;
+    currentScore1 = 0;
+    currentScore1.innerHTML = 0;
+    active0.classList.remove("active");
+    active1.classList.add("active");
+    currentPlayer = 2;
+  } else {
+    player2Score = player2Score + currentScore2;
+    player2Score.innerHTML = player2Score;
+    currentScore2 = 0;
+    currentScore2.innerHTML = 0;
+    active0.classList.add("active");
+    active1.classList.remove("active");
+    currentPlayer = 1;
+  }
 }
 
 
@@ -41,17 +77,8 @@ function diceRoll(){
   var diceNumb = Math.floor(Math.random() * 6) + 1;
 
 if (diceNumb >= 2){
-  if (diceNumb == 2){
-    diceImg.src = "dice-2.png";
-  } else if (diceNumb == 3){
-    diceImg.src = "dice-3.png";
-  } else if (diceNumb == 4){
-    diceImg.src = "dice-4.png";
-  } else if (diceNumb == 5){
-    diceImg.src = "dice-5.png";
-  } else {
-    diceImg.src = "dice-6.png";
-  }
+  diceImg.src = "dice-" + diceNumb +".png";
+
   diceImg.style.visibility = "";
   currentNumb = currentNumb + diceNumb;
 
@@ -67,32 +94,24 @@ if (diceNumb >= 2){
 
     if (currentPlayer == 1){
       currentScore1.innerHTML = currentNumb;
+      active0.classList.remove("active");
+      active1.classList.add("active");
       currentPlayer = 2;
-      active0.classList.remove = "active player-name::after";
-      active1.className = " active";
-
 
     } else {
       currentScore2.innerHTML = currentNumb;
+      active0.classList.add("active");
+      active1.classList.remove("active");
       currentPlayer = 1;
-
     }
   }
-
-
-  console.log(diceNumb);
-  console.log(currentNumb);
 
 }
 
 
 
 
-function gameReset(){
-  player1Score.innerHTML = 0;
-  player2Score.innerHTML = 0;
-  player1Current.innerHTML = 0;
-  player2Current.innerHTML = 0;
-  diceImg.style.visibility = "hidden";
-  currentNumb = 0;
-};
+
+
+
+gameReset();
