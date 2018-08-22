@@ -10,26 +10,26 @@ GAME RULES:
 */
 
 
+var currentNumb, currentPlayer, player1, player2, newGameBtn, player1Score, player2Score, player1Current, player2Current, diceImg, rollDiceBtn, currentScore1, currentScore2, active0, active1, holdBtn;
+
+currentNumb = 0;
+currentPlayer = 1;
+player1 = 0;
+player2 = 0;
 
 
-var currentNumb = 0;
-var currentPlayer = 1;
-var player1 = 0;
-var player2 = 0;
-
-
-var newGameBtn = document.getElementById("newgame");
-var player1Score = document.getElementById("score-0");
-var player2Score = document.getElementById("score-1");
-var player1Current = document.getElementById("current-0");
-var player2Current = document.getElementById("current-1");
-var diceImg = document.getElementById("dice");
-var rollDiceBtn = document.getElementById("rolldice");
-var currentScore1 = document.getElementById("current-0");
-var currentScore2 = document.getElementById("current-1");
-var active0 = document.getElementById("active-0");
-var active1 = document.getElementById("active-1");
-var holdBtn = document.getElementById("holdbtn");
+newGameBtn = document.getElementById("newgame");
+player1Score = document.getElementById("score-0");
+player2Score = document.getElementById("score-1");
+player1Current = document.getElementById("current-0");
+player2Current = document.getElementById("current-1");
+diceImg = document.getElementById("dice");
+rollDiceBtn = document.getElementById("rolldice");
+currentScore1 = document.getElementById("current-0");
+currentScore2 = document.getElementById("current-1");
+active0 = document.getElementById("active-0");
+active1 = document.getElementById("active-1");
+holdBtn = document.getElementById("holdbtn");
 
 
 newGameBtn.addEventListener("click", gameReset);
@@ -55,60 +55,51 @@ function holdPoints(){
     player1Score.innerHTML = player1;
     currentNumb = 0;
     currentScore1.innerHTML = 0;
-    active0.classList.remove("active");
-    active1.classList.add("active");
-    currentPlayer = 2;
+    activatePlayer2();
   } else {
     player2 = player2 + currentNumb;
     player2Score.innerHTML = player2;
     currentNumb = 0;
     currentScore2.innerHTML = 0;
-    active0.classList.add("active");
-    active1.classList.remove("active");
-    currentPlayer = 1;
+    activatePlayer1();
   }
 }
 
 
 function diceRoll(){
   var diceNumb = Math.floor(Math.random() * 6) + 1;
-
-if (diceNumb >= 2){
-  diceImg.src = "dice-" + diceNumb +".png";
-
-  diceImg.style.visibility = "";
-  currentNumb = currentNumb + diceNumb;
-
-  if (currentPlayer == 1){
-    currentScore1.innerHTML = currentNumb;
-  } else {
-    currentScore2.innerHTML = currentNumb;
-  }
-
-} else {
-    diceImg.style.visibility = "hidden";
-    currentNumb = 0;
-
+  if (diceNumb >= 2){
+    diceImg.src = "dice-" + diceNumb +".png";
+    diceImg.style.visibility = "";
+    currentNumb = currentNumb + diceNumb;
     if (currentPlayer == 1){
       currentScore1.innerHTML = currentNumb;
-      active0.classList.remove("active");
-      active1.classList.add("active");
-      currentPlayer = 2;
-
     } else {
       currentScore2.innerHTML = currentNumb;
-      active0.classList.add("active");
-      active1.classList.remove("active");
-      currentPlayer = 1;
+    }
+  } else {
+    diceImg.style.visibility = "hidden";
+    currentNumb = 0;
+    if (currentPlayer == 1){
+      currentScore1.innerHTML = currentNumb;
+      activatePlayer2();
+    } else {
+      currentScore2.innerHTML = currentNumb;
+      actiatePlayer1();
     }
   }
-
 }
 
 
+function activatePlayer2(){
+  active0.classList.remove("active");
+  active1.classList.add("active");
+  currentPlayer = 2;
+}
 
-
-
-
-
+function activatePlayer1(){
+  active0.classList.add("active");
+  active1.classList.remove("active");
+  currentPlayer = 1;
+}
 gameReset();
