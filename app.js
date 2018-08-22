@@ -10,13 +10,12 @@ GAME RULES:
 */
 
 
-// TO DO:
-// - Add Hold functionality.
-
 
 
 var currentNumb = 0;
 var currentPlayer = 1;
+var player1 = 0;
+var player2 = 0;
 
 
 var newGameBtn = document.getElementById("newgame");
@@ -52,19 +51,17 @@ function gameReset(){
 
 function holdPoints(){
   if (currentPlayer == 1){
-    player1Score = player1Score + currentScore1;
-    player1Score.innerHTML = 1;
-
-    //player1Score.innerHTML = player1Score;
-    currentScore1 = 0;
+    player1  = player1 + currentNumb;
+    player1Score.innerHTML = player1;
+    currentNumb = 0;
     currentScore1.innerHTML = 0;
     active0.classList.remove("active");
     active1.classList.add("active");
     currentPlayer = 2;
   } else {
-    player2Score = player2Score + currentScore2;
-    player2Score.innerHTML = player2Score;
-    currentScore2 = 0;
+    player2 = player2 + currentNumb;
+    player2Score.innerHTML = player2;
+    currentNumb = 0;
     currentScore2.innerHTML = 0;
     active0.classList.add("active");
     active1.classList.remove("active");
