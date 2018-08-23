@@ -10,7 +10,10 @@ GAME RULES:
 */
 
 
-var currentNumb, currentPlayer, player1, player2, newGameBtn, player1Score, player2Score, player1Current, player2Current, diceImg, rollDiceBtn, currentScore1, currentScore2, active0, active1, holdBtn;
+
+
+
+var currentNumb, currentPlayer, player1, player2, newGameBtn, player1Score, player2Score, player1Current, player2Current, diceImg, rollDiceBtn, currentScore1, currentScore2, active0, active1, holdBtn, playerOne, playerTwo;
 
 currentNumb = 0;
 currentPlayer = 1;
@@ -30,6 +33,8 @@ currentScore2 = document.getElementById("current-1");
 active0 = document.getElementById("active-0");
 active1 = document.getElementById("active-1");
 holdBtn = document.getElementById("holdbtn");
+playerOne = document.getElementById("name-0");
+playerTwo = document.getElementById("name-1");
 
 
 newGameBtn.addEventListener("click", gameReset);
@@ -42,27 +47,43 @@ function gameReset(){
   player2Score.innerHTML = 0;
   player1Current.innerHTML = 0;
   player2Current.innerHTML = 0;
-  currentPlayer = 1;
+  playerOne.innerHTML = "PLAYER 1";
+  playerTwo.innerHTML = "PLAYER 2";
   diceImg.style.visibility = "hidden";
+  currentPlayer = 1;
+  player1 = 0;
+  player2 = 0;
   currentNumb = 0;
+  activatePlayer1();
+  addEvents();
 }
 
-
-
 function holdPoints(){
-  if (currentPlayer == 1){
-    player1  = player1 + currentNumb;
+
+  if (currentPlayer === 1){
+    player1 = player1 + currentNumb;
     player1Score.innerHTML = player1;
     currentNumb = 0;
     currentScore1.innerHTML = 0;
+    if (player1 >= 50){
+      playerOne.innerHTML = "You Win!";
+      removeEvents();
+    } else {
     activatePlayer2();
+  }
   } else {
     player2 = player2 + currentNumb;
     player2Score.innerHTML = player2;
     currentNumb = 0;
     currentScore2.innerHTML = 0;
+    if (player2 >= 50){
+      playerTwo.innerHTML = "You Win!";
+      removeEvents();
+    } else {
     activatePlayer1();
+    }
   }
+
 }
 
 
@@ -80,16 +101,29 @@ function diceRoll(){
   } else {
     diceImg.style.visibility = "hidden";
     currentNumb = 0;
-    if (currentPlayer == 1){
+    if (currentPlayer === 1){
       currentScore1.innerHTML = currentNumb;
       activatePlayer2();
+
     } else {
       currentScore2.innerHTML = currentNumb;
-      actiatePlayer1();
+      activatePlayer1();
+
     }
   }
 }
 
+
+
+function addEvents(){
+  rollDiceBtn.addEventListener("click", diceRoll);
+  holdBtn.addEventListener("click", holdPoints);
+}
+
+function removeEvents(){
+  rollDiceBtn.removeEventListener("click", diceRoll);
+  holdBtn.removeEventListener("click", holdPoints);
+}
 
 function activatePlayer2(){
   active0.classList.remove("active");
